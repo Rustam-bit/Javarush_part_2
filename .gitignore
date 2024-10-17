@@ -1,3 +1,6 @@
 .idea
 *.iml
 /out/production/1/Main.class
+/out/production/1/Main$DBObject.class
+/out/production/1/Main$Matrix.class
+/out/production/1/Main$User.class
