@@ -1,3 +1,5 @@
+package src;
+
 public class Solution_3 {
     public static void main(String[] args) throws Exception {
         System.out.println(Matrix.NEO);

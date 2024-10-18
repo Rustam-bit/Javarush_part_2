@@ -1,3 +1,5 @@
+package src;
+
 public class Person implements RepkaItem {
     private String name;
     private String namePadezh;

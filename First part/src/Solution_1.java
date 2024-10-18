@@ -1,3 +1,5 @@
+package src;
+
 public class Solution_1 {
     public static void main(String[] args) throws Exception {
         EnglishTranslator englishTranslator = new EnglishTranslator();
