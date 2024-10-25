@@ -1,65 +1,32 @@
 package src.Second_part;
 
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 
 public class Solution_1 {
+    public static volatile boolean cancel = true;
     public static void main(String[] args) throws InterruptedException {
-        List<Horse> horses = prepareHorsesAndStart(10);
-        while (calculateHorsesFinished(horses) != horses.size()) {
-        }
+        Thread t = new Thread(new TestThread());
+        t.start();
+        Thread.sleep(3000);
+        ourInterruptMethod();
     }
 
-    public static int calculateHorsesFinished(List<Horse> horses) throws InterruptedException {
-        int finishedCount = 0;
-        for (Horse horse : horses) {
-            if (horse.isFinished()) {
-                finishedCount++;
-            } else {
-                System.out.println("Waiting for " + horse.getName());
-                horse.join();
-            }
-        }
-        return finishedCount;
+    public static void ourInterruptMethod() {
+       cancel = false;
     }
 
-    public static List<Horse> prepareHorsesAndStart(int horseCount) {
-        List<Horse> horses = new ArrayList<>(horseCount);
-        String number;
-        for (int i = 1; i < horseCount + 1; i++) {
-            number = i < 10 ? ("0" + i) : "" + i;
-            horses.add(new Horse("Horse_" + number));
-        }
-
-        System.out.println("All horses start the race!");
-        for (int i = 0; i < horseCount; i++) {
-            horses.get(i).start();
-        }
-        return horses;
-    }
-}
-
-class Horse extends Thread {
-
-    private boolean isFinished;
-
-    public Horse(String name) {
-        super(name);
-    }
-
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public void run() {
-        String s = "";
-        for (int i = 0; i < 1001; i++) {   // Задержка
-            s += "" + i;
-            if (i == 1000) {
-                isFinished = true;
-                s = " has finished the race!";
-                System.out.println(getName() + s);
+    public static class TestThread implements Runnable {
+        public void run() {
+            while (cancel) {
+                try {
+                    System.out.println("he-he");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                }
             }
         }
     }
